@@ -1,42 +1,36 @@
 <?php
-  // contact.php
-  // This file handles the contact form submission and sends an email with the form data.
-  if ($_SERVER["REQUEST_METHOD"] !== "POST") { 
+error_reporting(E_ALL);
+ini_set('display_errors', 1); // Display errors directly on the page
+ini_set('display_startup_errors', 1); // Display startup errors
+?>
+
+<?php
+
+  // DB Connection
+  $db_host = 'localhost';
+  $db_user = 'root';
+  $db_pass = 'rootroot';
+  $db_name = 'portfolio';
+
+  // Create connection
+  $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
+
+  if ($_SERVER["REQUEST_METHOD"] !== "GET") { 
     die('Invalid request method. Please use the contact form.');
   }
 
-  if( !isset($_POST['email']) || !isset($_POST['name']) || !isset($_POST['subject']) || !isset($_POST['message']) ) {
-    die('Please fill all required fields!');
-  }
-  if( !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) ) {
-    die('Invalid email address!');
-  }
-  if( empty($_POST['message']) ) {
-    die('Message is required!');
-  }
-  $name = htmlspecialchars($_POST['name']);
-  $email = htmlspecialchars($_POST['email']);
-  $subject = htmlspecialchars($_POST['subject']);
-  $message = htmlspecialchars($_POST['message']);
+  $name = htmlspecialchars($_GET['name']);
+  $email = htmlspecialchars($_GET['email']);
+  $subject = htmlspecialchars($_GET['subject']);
+  $message = htmlspecialchars($_GET['message']);
 
-  $to = 'salmanshah4003@gmail.com'; 
-
-  $messageContent = "
-    You received a message request from a client:\n\n
-    Name: $name\n
-    Email: $email\n
-    Subject: $subject\n
-    Message: \n$message
-    ";
-
-  $headers = "From: $email\r\nReply-To: $email\r\n";
-
-  if (mail($to, $subject, $messageContent, $headers)) {
-        echo "<script>alert('Your contact form has been submitted successfully! Thank you for your interest. I will contact you within 24 hours.');window.location.href='index.html';</script>";
-        header("Location: thank-you.html");
-        echo "Email sent successfully!";
-        exit;
-    } else {
-        echo "<script>alert('Something went wrong. Please try again later.');window.history.back();</script>";
-  }
+  // Save to database
+  $stmt = $conn->prepare("INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
+  $stmt->bind_param("ssss", $name, $email, $subject, $message);
+  $stmt->execute();
+ 
 ?>
