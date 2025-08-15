@@ -17,6 +17,7 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link rel="stylesheet" href="/assets/vendor/fonts/fonts.googleapis.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
@@ -43,12 +44,12 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
+          <li><a href="index.html">About</a></li>
           <li><a href="resume.html">Resume</a></li>
           <li><a href="services.html">Services</a></li>
           <li><a href="portfolio.html">Portfolio</a></li>
-          <li><a href="contact.html" class="active">Contact</a></li>
+          <li><a href="catalog.html">Catalog</a></li>
+          <li><a href="contact.php" class="active">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -75,7 +76,7 @@
         </a>
       </div>
   </header><!-- End Header -->
-
+  <!-- ======= Main ======= -->
   <main class="main">
 
     <!-- Contact Section -->
@@ -119,10 +120,25 @@
                   </div>
                 </div><!-- End Info Item -->
 
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3401.8!2d74.2634!3d31.5204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s139%2C+Kamran+Block+Allama+Iqbal+Town%2C+Lahore%2C+45000!5e0!3m2!1sen!2s!4v1622547123456!5m2!1sen!2s"
-                  width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
-                </iframe>
+                <div id="map-placeholder" style="width:100%;height:300px;background:#f3f3f3;display:flex;align-items:center;justify-content:center;">
+                  <span>Loading map...</span>
+                </div>
+                <script>
+                  document.addEventListener("DOMContentLoaded", function () {
+                    setTimeout(function () {
+                      var iframe = document.createElement("iframe");
+                      iframe.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3401.8!2d74.2634!3d31.5204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s139%2C+Kamran+Block+Allama+Iqbal+Town%2C+Lahore%2C+45000!5e0!3m2!1sen!2s!4v1622547123456!5m2!1sen!2s";
+                      iframe.width = "100%";
+                      iframe.height = "300";
+                      iframe.style.border = "0";
+                      iframe.allowFullscreen = true;
+                      iframe.loading = "lazy";
+                      var mapDiv = document.getElementById("map-placeholder");
+                      mapDiv.innerHTML = "";
+                      mapDiv.appendChild(iframe);
+                    }, 800); // Delay for better UI rendering
+                  });
+                </script>
               </div>
 
             </div>
@@ -147,7 +163,7 @@
                 <div class="col-md-12">
                   <label for="subject-field" class="pb-2">Subject</label>
                   <input type="text" class="form-control" name="subject" id="subject-field" autocomplete="on"
-                    placeholder="Website development | Shopify store development | Bug-fixes" required>
+                    placeholder="Website development | Bug-fixes | Feedback" required>
                 </div>
 
                 <div class="col-md-12">
@@ -163,7 +179,6 @@
 
                   <button type="submit">Send Message</button>
                 </div>
-
               </div>
             </form>
           </div><!-- End Contact Form -->
@@ -176,13 +191,10 @@
 
   </main>
 
+  <!-- Footer -->
   <footer id="footer" class="footer light-background">
 
     <div class="container">
-      <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">M. Salman Shah</strong> <span>All Rights
-            Reserved<br></span></p>
-      </div>
       <div class="social-links d-flex justify-content-center">
         <a href="https://www.upwork.com/freelancers/~019017e4f50cdde82d?mp_source=share" target="_blank" class="upwork">
           <svg style="padding: 8px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 641 512">
@@ -191,13 +203,21 @@
           </svg>
         </a>
         <a href="https://github.com/M-Salman-Shah" target="_blank" class="github"><i class="bi bi-github"></i></a>
-        <a href="https://www.instagram.com/salman_shah_4003/" target="_blank" class="instagram"><i
+        <a href="https://www.instagram.com/salman_shah_4003" target="_blank" class="instagram"><i
             class="bi bi-instagram"></i></a>
         <a href="https://www.linkedin.com/in/m-salman-shah" target="_blank" class="linkedin"><i
             class="bi bi-linkedin"></i></a>
       </div>
       <div class="credits">
-        Designed & Developed by <a href="https://www.upwork.com/freelancers/~019017e4f50cdde82d?mp_source=share">M. Salman Shah</a>
+        <p>
+          Designed & Developed by <a href="https://www.upwork.com/freelancers/~019017e4f50cdde82d?mp_source=share">M.
+            Salman Shah</a>
+        </p>
+      </div>
+      <div class="copyright text-center ">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">M. Salman Shah</strong> <span>All Rights
+            Reserved<br></span>
+        </p>
       </div>
     </div>
 
