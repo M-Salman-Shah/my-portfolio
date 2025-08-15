@@ -19,18 +19,27 @@ ini_set('display_startup_errors', 1); // Display startup errors
     die("Connection failed: " . $conn->connect_error);
   }
 
-  if ($_SERVER["REQUEST_METHOD"] !== "GET") { 
-    die('Invalid request method. Please use the contact form.');
+  if ($_SERVER["REQUEST_METHOD"] == "GET") { 
+    
+    $name = htmlspecialchars($_GET['name']);
+    $email = htmlspecialchars($_GET['email']);
+    $subject = htmlspecialchars($_GET['subject']);
+    $message = htmlspecialchars($_GET['message']);
+    
+    // Save to database
+    $stmt = $conn->prepare("INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $name, $email, $subject, $message);
+    $stmt->execute();
+    // Close connection
+    $conn->close();
+    if ($stmt->error) {
+      die("Error: " . $stmt->error);
+    }
+    // Redirect to the contact page
+    header("Location: ../contact.html#contact");
+    exit();
+  } else {
+    echo "Invalid request method.";
   }
 
-  $name = htmlspecialchars($_GET['name']);
-  $email = htmlspecialchars($_GET['email']);
-  $subject = htmlspecialchars($_GET['subject']);
-  $message = htmlspecialchars($_GET['message']);
-
-  // Save to database
-  $stmt = $conn->prepare("INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
-  $stmt->bind_param("ssss", $name, $email, $subject, $message);
-  $stmt->execute();
- 
 ?>
